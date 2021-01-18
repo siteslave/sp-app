@@ -60,6 +60,19 @@ class _HomeState extends State<Home> {
             ),
           ],
         ),
+        bottomNavigationBar: BottomAppBar(
+          elevation: 0,
+          shape: CircularNotchedRectangle(),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+            IconButton(icon: Icon(Icons.replay), onPressed: () {}),
+            IconButton(icon: Icon(Icons.search), onPressed: () {}),
+          ],
+        )),
+        floatingActionButton: FloatingActionButton(child: Icon(Icons.edit), 
+        onPressed: () {}),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         );
   }
 }
