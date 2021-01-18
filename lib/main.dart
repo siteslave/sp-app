@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sps_app/home.dart';
 
 void main() {
   runApp(MyApp());
@@ -9,11 +10,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'SPS Application',
-      home: Scaffold(
-          appBar: AppBar(
-            title: Text('SPS Application'),
-          ),
-          body: Text('xxxxx')),
+      home: Home()
     );
   }
 }
