@@ -62,9 +62,11 @@ class _HomeState extends State<Home> {
               children: [
                 IconButton(
                     icon: Icon(Icons.settings, size: 32, color: Colors.white),
-                    onPressed: () {
-                      Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => Setting(20, "satit")));
+                    onPressed: () async {
+                      var res = await Navigator.of(context).push(
+                          MaterialPageRoute(
+                              builder: (context) => Setting(userId: 20, username: 'Satit')));
+                      if (res != null) print('Callback data');
                     }),
                 IconButton(
                     icon: Icon(Icons.search, size: 32, color: Colors.white),
