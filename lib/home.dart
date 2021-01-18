@@ -32,9 +32,12 @@ class _HomeState extends State<Home> {
             Container(
               height: 100,
               color: Colors.yellow,
-              child: Column(children: [
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
                 Text('Google Express -- 15 mins ago'),
-                Text('Package Shipped!'),
+                Text('Package Shipped!', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),),
                 Row(
                   children: [
                     Icon(Icons.notification_important),
