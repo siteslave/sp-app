@@ -15,21 +15,6 @@ class _HomeState extends State<Home> {
         ),
         body: Column(
           children: [
-            Row(
-              children: [
-                RaisedButton(onPressed: () {},child: Text('หน้าถัดไป'), color: Colors.red,),
-                RaisedButton(onPressed: () {},child: Text('ข้ามไปหน้า 2'), color: Colors.green,),
-                RaisedButton(onPressed: () {},child: Text('ข้ามไปหน้า 3'), color: Colors.yellow),
-              ],
-            ),
-            Row(
-              children: [
-                RaisedButton(onPressed: () {},child: Text('หน้าถัดไป'), color: Colors.red,),
-                RaisedButton(onPressed: () {},child: Text('ข้ามไปหน้า 2'), color: Colors.green,),
-                RaisedButton(onPressed: () {},child: Text('ข้ามไปหน้า 3'), color: Colors.yellow),
-              ],
-            ),
-
             Container(
               // height: 100,
               margin: EdgeInsets.only(left: 10, right: 10),
@@ -61,21 +46,16 @@ class _HomeState extends State<Home> {
           ],
         ),
         bottomNavigationBar: BottomAppBar(
-          color: Colors.transparent,
+          color: Color(0xFF344955),
           elevation: 0,
           // shape: CircularNotchedRectangle(),
           child: Container(
             height: 65,
-            margin: EdgeInsets.only(left: 10, right: 10, bottom: 10),
-            decoration: BoxDecoration(
-              color: Color(0xFF344955),
-              borderRadius: BorderRadius.all(Radius.circular(25))
-            ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-              IconButton(icon: Icon(Icons.replay, size: 38, color: Colors.white), onPressed: () {}),
-              IconButton(icon: Icon(Icons.search, size: 38, color: Colors.white), onPressed: () {}),
+              IconButton(icon: Icon(Icons.settings, size: 32, color: Colors.white), onPressed: () {}),
+              IconButton(icon: Icon(Icons.search, size: 32, color: Colors.white), onPressed: () {}),
             ],
         ),
           )),
