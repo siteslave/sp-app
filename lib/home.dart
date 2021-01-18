@@ -61,16 +61,25 @@ class _HomeState extends State<Home> {
           ],
         ),
         bottomNavigationBar: BottomAppBar(
+          color: Colors.transparent,
           elevation: 0,
-          shape: CircularNotchedRectangle(),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-            IconButton(icon: Icon(Icons.replay), onPressed: () {}),
-            IconButton(icon: Icon(Icons.search), onPressed: () {}),
-          ],
-        )),
-        floatingActionButton: FloatingActionButton(child: Icon(Icons.edit), 
+          // shape: CircularNotchedRectangle(),
+          child: Container(
+            height: 65,
+            margin: EdgeInsets.only(left: 10, right: 10, bottom: 10),
+            decoration: BoxDecoration(
+              color: Color(0xFF344955),
+              borderRadius: BorderRadius.all(Radius.circular(25))
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+              IconButton(icon: Icon(Icons.replay, size: 38, color: Colors.white), onPressed: () {}),
+              IconButton(icon: Icon(Icons.search, size: 38, color: Colors.white), onPressed: () {}),
+            ],
+        ),
+          )),
+        floatingActionButton: FloatingActionButton.extended(icon: Icon(Icons.edit),label: Text('ส่งข้อความ'), 
         onPressed: () {}),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         );
