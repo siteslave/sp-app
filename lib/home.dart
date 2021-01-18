@@ -64,7 +64,7 @@ class _HomeState extends State<Home> {
                     icon: Icon(Icons.settings, size: 32, color: Colors.white),
                     onPressed: () {
                       Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => Setting()));
+                          MaterialPageRoute(builder: (context) => Setting(20, "satit")));
                     }),
                 IconButton(
                     icon: Icon(Icons.search, size: 32, color: Colors.white),
