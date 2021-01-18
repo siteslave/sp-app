@@ -12,6 +12,12 @@ class _HomeState extends State<Home> {
         appBar: AppBar(
           title: Text('SPS Application'),
         ),
-        body: RaisedButton(onPressed: () {},child: Text('หน้าถัดไป'),));
+        body: Row(
+          children: [
+            RaisedButton(onPressed: () {},child: Text('หน้าถัดไป'), color: Colors.red,),
+            RaisedButton(onPressed: () {},child: Text('ข้ามไปหน้า 2'), color: Colors.green,),
+            RaisedButton(onPressed: () {},child: Text('ข้ามไปหน้า 3'), color: Colors.yellow),
+          ],
+        ));
   }
 }
