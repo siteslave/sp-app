@@ -16,17 +16,45 @@ class _LoginState extends State<Login> {
     ),body: ListView(
       children: [
         Container(
-          height: 150,
-          width: 150,
+          height: 120,
+          width: 120,
           decoration: BoxDecoration(
-            color: Colors.red,
+            // color: Colors.red,
             shape: BoxShape.circle,
             image: DecorationImage(
               image: AssetImage('assets/images/logo.png')
             )
           ),
         ),
-        Text('Login'),
+        Center(child: Text('เข้าสู่ระบบ')),
+
+        Container(
+          margin: EdgeInsets.all(20),
+          padding: EdgeInsets.all(20),
+          decoration: BoxDecoration(
+            color: Colors.white,
+          ),
+          child: Form(child: Column(children: [
+
+            TextFormField(
+              decoration: InputDecoration(
+                prefixIcon: Icon(Icons.person),
+                fillColor: Colors.grey[200],
+                filled: true,
+                labelText: 'ชื่อผู้ใช้งาน'
+              ),
+            ),
+          SizedBox(height: 10),
+             TextFormField(
+              decoration: InputDecoration(
+                prefixIcon: Icon(Icons.keyboard),
+                fillColor: Colors.grey[200],
+                filled: true,
+                labelText: 'รหัสผ่าน'
+              ),
+            ),
+          ],),),
+        )
       ],
     ),);
   }
