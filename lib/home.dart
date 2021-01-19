@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'pages/login.dart';
 import 'pages/history.dart';
 import 'pages/manager.dart';
 import 'setting.dart';
@@ -16,6 +17,12 @@ class _HomeState extends State<Home> {
       backgroundColor: Color(0xFFEDF0F2), // Color(0xFFxxxxxx)
       appBar: AppBar(
         title: Text('SPS Application'),
+        actions: [
+          IconButton(icon: Icon(Icons.login), onPressed: () {
+            Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) => Login(), fullscreenDialog: true));
+          }),
+          ],
       ),
       body: ListView(
         children: [
