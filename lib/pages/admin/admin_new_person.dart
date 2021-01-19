@@ -12,7 +12,14 @@ class _AdminNewPersonState extends State<AdminNewPerson> {
       appBar: AppBar(
         title: Text('เพิ่มข้อมูลบุคลากร')
       ),
-      body: Text('ปปปปป')
+      body: ListView(
+        children: [
+          Text('ข้อมูลบุคลากร'),
+          Form(child: Column(children: [
+            TextFormField(),
+          ],))
+        ],
+      )
     );
   }
 }
