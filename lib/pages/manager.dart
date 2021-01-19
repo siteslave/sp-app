@@ -41,10 +41,45 @@ class _ManagerState extends State<Manager> {
             child: ExpansionTile(
               title: Text('กลุ่มงานประกันสุขภาพ'),
               children: [
-                ListTile(title: Text('นายสถิตย์ เรียนพิศ'),subtitle: Text('นักวิชาการคอมพิวเตอร์')),
+                ListTile(
+                  leading: CircleAvatar(
+                    backgroundColor: Colors.grey[100],
+                    child: Image.network('https://randomuser.me/api/portraits/men/32.jpg'),
+                  ),
+                  title: Text('นายสถิตย์ เรียนพิศ'),subtitle: Text('นักวิชาการคอมพิวเตอร์')),
+                ListTile(
+                  leading: CircleAvatar(
+                    backgroundColor: Colors.grey[100],
+                    child: Image.network('https://randomuser.me/api/portraits/men/33.jpg'),
+                  ),
+                  title: Text('นายทดสอบ ไม่เอาจริง'),subtitle: Text('นักวิชาการสาธารณสุข')),
               ],
               ),
-          )
+          ),
+          Container(
+            margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10)
+            ),
+            child: ExpansionTile(
+              title: Text('กลุ่มงานส่งเสริมสุขภาพ'),
+              children: [
+                ListTile(
+                  leading: CircleAvatar(
+                    backgroundColor: Colors.grey[100],
+                    child: Image.network('https://randomuser.me/api/portraits/men/34.jpg'),
+                  ),
+                  title: Text('นายสถิตย์ เรียนพิศ'),subtitle: Text('นักวิชาการคอมพิวเตอร์')),
+                ListTile(
+                  leading: CircleAvatar(
+                    backgroundColor: Colors.grey[100],
+                    child: Image.network('https://randomuser.me/api/portraits/men/35.jpg'),
+                  ),
+                  title: Text('นายทดสอบ ไม่เอาจริง'),subtitle: Text('นักวิชาการสาธารณสุข')),
+              ],
+              ),
+          ),
         ],
       ),
     );
