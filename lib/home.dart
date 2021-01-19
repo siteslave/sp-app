@@ -15,7 +15,7 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         title: Text('SPS Application'),
       ),
-      body: Column(
+      body: ListView(
         children: [
           Container(
             // height: 100,
@@ -49,6 +49,29 @@ class _HomeState extends State<Home> {
               ],
             ),
           ),
+
+          Text('เมนูหลัก'),
+          Container(
+            decoration: BoxDecoration(color: Colors.white),
+            margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+            child: ListTile(
+              title: Text('ประวัติโรงพยาบาล'),
+              subtitle: Text('ประวัติความเป็นมาของโรงพยาบาล'),
+              trailing: Icon(Icons.arrow_right),
+              leading: Icon(Icons.home, color: Colors.green,),
+            ),
+          ),
+
+          Container(
+            decoration: BoxDecoration(color: Colors.white),
+            margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+            child: ListTile(
+              title: Text('ทำเนียบผู้บริหาร'),
+              subtitle: Text('รายชื่อผู้บริหารโรงพยาบาล'),
+              trailing: Icon(Icons.arrow_right),
+              leading: Icon(Icons.group,color: Colors.pink,),
+            ),
+          )
         ],
       ),
       bottomNavigationBar: BottomAppBar(
