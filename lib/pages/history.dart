@@ -14,13 +14,15 @@ class _HistoryState extends State<History> {
       ),
       body: ListView(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(10),
-            child: Image(
-              image: AssetImage('assets/images/hospital.jpg'),
-              height: 100,
+          Container(
+            height: 200,
+            decoration: BoxDecoration(
+              color: Colors.red,
+              image: DecorationImage(
+                image: AssetImage('assets/images/hospital.jpg'),fit: BoxFit.fill)
             ),
           ),
+          SizedBox(height: 10),
           Column(children: [
             Text(
               'โรงพยาบาลสรรพสิทธิประสงค์',
