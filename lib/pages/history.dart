@@ -62,7 +62,7 @@ class _HistoryState extends State<History> {
             child: ListTile(
                 leading: Text('ผู้อำนวยการ',
                     style: TextStyle(fontWeight: FontWeight.bold)),
-                title: Text('นายแพทย์มนต์ชัย วิวัฒนาสิทธิพงศ์')),
+                title: Text('นพ.มนต์ชัย วิวัฒนาสิทธิพงศ์')),
           ),
           Container(
             margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
@@ -80,15 +80,14 @@ class _HistoryState extends State<History> {
                     Text('เว็บไซต์', style: TextStyle(fontWeight: FontWeight.bold)),
                 title: Text('http://www.sappasit.go.th')),
           ),
-          Divider(),
           Padding(
-            padding: const EdgeInsets.all(10),
+            padding: const EdgeInsets.only(left: 10),
             child: Text('ประวัติ',style: TextStyle(fontWeight: FontWeight.bold)),
           ),
           Container(
             margin: EdgeInsets.all(10),
             padding: EdgeInsets.all(10),
-            decoration: BoxDecoration(color: Colors.green[50]),
+            decoration: BoxDecoration(color: Colors.white),
             child: Text('โรงพยาบาลสรรพสิทธิประสงค์ เป็นโรงพยาบาลศูนย์ ประจำจังหวัดอุบลราชธานี และเป็นโรงพยาบาลศูนย์แห่งแรกของเขตบริการสุขภาพเขต10 สังกัดกระทรวงสาธารณสุข ให้บริการรักษาทั่วไปแก่ผู้ป่วยในและผู้ป่วยนอก ในเขตพื้นที่ภาคตะวันออกเฉียงเหนือตอนล่าง เขตบริการสุขภาพที่10(อุบลราชธานี ศรีสะเกษ ยโสธร อำนาจเจริญ มุกดาหาร)และพื้นที่ใกล้เคียง และเป็นศูนย์แพทยศาสตร์ศึกษาระดับชั้นคลินิก ให้กับคณะแพทยศาสตร์ มหาวิทยาลัยขอนแก่น และวิทยาลัยแพทยศาสตร์และการสาธารณสุข มหาวิทยาลัยอุบลราชธานี โดยเป็นสถานพยาบาลที่ตั้งอยู่บนพื้นที่ประทานของ หม่อมเจ้าอุปลีสาณ ชุมพล และ หม่อมเจ้ากมลีสาณ ชุมพล ซึ่งเป็นที่ดินตกทอดมาเป็นมรดกในบริเวณที่เรียกว่า "สวนโนนดง" ของพลตรีพระเจ้าบรมวงศ์เธอ กรมหลวงสรรพสิทธิประสงค์ ข้าหลวงต่างพระองค์สำเร็จราชการมณฑลลาวกาว (มณฑลอีสาน)'))
         ],
       ),

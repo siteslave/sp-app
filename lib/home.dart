@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'pages/history.dart';
+import 'pages/manager.dart';
 import 'setting.dart';
 
 class Home extends StatefulWidget {
@@ -79,6 +80,10 @@ class _HomeState extends State<Home> {
             decoration: BoxDecoration(color: Colors.white),
             margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
             child: ListTile(
+              onTap: () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) => Manager()));
+              },
               title: Text('ทำเนียบผู้บริหาร'),
               subtitle: Text('รายชื่อผู้บริหารโรงพยาบาล'),
               trailing: Icon(Icons.arrow_right),
