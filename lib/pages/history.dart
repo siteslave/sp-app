@@ -29,33 +29,57 @@ class _HistoryState extends State<History> {
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
             ),
             Text('Sunpasitthiprasong Hospital'),
-            ListTile(
-                leading: Text('ประเภท',
-                    style: TextStyle(fontWeight: FontWeight.bold)),
-                title: Text('รัฐ (โรงพยาบาลศูนย์)')),
-            ListTile(
-                leading: Text('ที่ตั้ง',
-                    style: TextStyle(fontWeight: FontWeight.bold)),
-                title: Text(
-                    'เลขที่ 122 ถนนสรรพสิทธิ์ ตำบลในเมือง อำเภอเมืองอุบลราชธานี จังหวัดอุบลราชธานี')),
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+              color: Colors.white,
+              child: ListTile(
+                  leading: Text('ประเภท',
+                      style: TextStyle(fontWeight: FontWeight.bold)),
+                  title: Text('รัฐ (โรงพยาบาลศูนย์)')),
+            ),
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+              color: Colors.white,
+              child: ListTile(
+                  leading: Text('ที่ตั้ง',
+                      style: TextStyle(fontWeight: FontWeight.bold)),
+                  title: Text(
+                      'เลขที่ 122 ถนนสรรพสิทธิ์ ตำบลในเมือง อำเภอเมืองอุบลราชธานี จังหวัดอุบลราชธานี')),
+            ),
           ]),
-          Divider(),
-          ListTile(
-              leading: Text('ก่อตั้ง',
-                  style: TextStyle(fontWeight: FontWeight.bold)),
-              title: Text('3 มกราคม พ.ศ. 2479')),
-          ListTile(
-              leading: Text('ผู้อำนวยการ',
-                  style: TextStyle(fontWeight: FontWeight.bold)),
-              title: Text('นายแพทย์มนต์ชัย วิวัฒนาสิทธิพงศ์')),
-          ListTile(
-              leading:
-                  Text('เตียง', style: TextStyle(fontWeight: FontWeight.bold)),
-              title: Text('1,427 เตียง')),
-          ListTile(
-              leading:
-                  Text('เว็บไซต์', style: TextStyle(fontWeight: FontWeight.bold)),
-              title: Text('http://www.sappasit.go.th')),
+          
+          Container(
+            margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+              color: Colors.white,
+            child: ListTile(
+                leading: Text('ก่อตั้ง',
+                    style: TextStyle(fontWeight: FontWeight.bold)),
+                title: Text('3 มกราคม พ.ศ. 2479')),
+          ),
+          Container(
+            margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+              color: Colors.white,
+            child: ListTile(
+                leading: Text('ผู้อำนวยการ',
+                    style: TextStyle(fontWeight: FontWeight.bold)),
+                title: Text('นายแพทย์มนต์ชัย วิวัฒนาสิทธิพงศ์')),
+          ),
+          Container(
+            margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+              color: Colors.white,
+            child: ListTile(
+                leading:
+                    Text('เตียง', style: TextStyle(fontWeight: FontWeight.bold)),
+                title: Text('1,427 เตียง')),
+          ),
+          Container(
+            margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+              color: Colors.white,
+            child: ListTile(
+                leading:
+                    Text('เว็บไซต์', style: TextStyle(fontWeight: FontWeight.bold)),
+                title: Text('http://www.sappasit.go.th')),
+          ),
           Divider(),
           Padding(
             padding: const EdgeInsets.all(10),
