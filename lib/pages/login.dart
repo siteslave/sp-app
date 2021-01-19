@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wc_form_validators/wc_form_validators.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -43,12 +44,10 @@ class _LoginState extends State<Login> {
               child: Column(
                 children: [
                   TextFormField(
-                    validator: (value) {
-                      if (value.isEmpty) {
-                        return 'กรุณาระบุชื่อผู้ใช้งาน';
-                      }
-                      return null;
-                    },
+                    validator: Validators.compose([
+                      Validators.required('ระบุชื่อผู้ใช้งาน'),
+                      Validators.email('รูปแบบอีเมล์ไม่ถูกต้อง')
+                    ]),
                     controller: ctrlUsername,
                     decoration: InputDecoration(
                         border: InputBorder.none,
