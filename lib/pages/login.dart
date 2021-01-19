@@ -6,6 +6,9 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  TextEditingController ctrlUsername = TextEditingController();
+  TextEditingController ctrlPassword = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,6 +40,7 @@ class _LoginState extends State<Login> {
               child: Column(
                 children: [
                   TextFormField(
+                    controller: ctrlUsername,
                     decoration: InputDecoration(
                         border: InputBorder.none,
                         prefixIcon: Icon(Icons.person),
@@ -46,6 +50,7 @@ class _LoginState extends State<Login> {
                   ),
                   SizedBox(height: 10),
                   TextFormField(
+                    controller: ctrlPassword,
                     obscureText: true,
                     decoration: InputDecoration(
                         border: InputBorder.none,
@@ -55,11 +60,22 @@ class _LoginState extends State<Login> {
                         labelText: 'รหัสผ่าน'),
                   ),
                   SizedBox(height: 20),
-
                   RaisedButton.icon(
                     elevation: 0,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
-                    color: Color(0xFFF9AA33), onPressed: () {}, icon: Icon(Icons.arrow_forward_rounded), label: Text('เข้าสู่ระบบ', style: TextStyle(fontWeight: FontWeight.bold)),),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(40)),
+                    color: Color(0xFFF9AA33),
+                    onPressed: () {
+                      String username = ctrlUsername.text;
+                      String password = ctrlPassword.text;
+
+                      print(username);
+                      print(password);
+                    },
+                    icon: Icon(Icons.arrow_forward_rounded),
+                    label: Text('เข้าสู่ระบบ',
+                        style: TextStyle(fontWeight: FontWeight.bold)),
+                  ),
                 ],
               ),
             ),
