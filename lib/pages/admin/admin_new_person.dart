@@ -28,8 +28,16 @@ class _AdminNewPersonState extends State<AdminNewPerson> {
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text('เลือกตำแหน่ง',
-                    style: TextStyle(fontWeight: FontWeight.bold)),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('เลือกตำแหน่ง',
+                        style: TextStyle(fontWeight: FontWeight.bold)),
+                    IconButton(icon: Icon(Icons.close), onPressed: () {
+                      Navigator.of(context).pop();
+                    })
+                  ],
+                ),
               ),
               Divider(),
               ListTile(
