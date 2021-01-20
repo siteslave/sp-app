@@ -12,6 +12,31 @@ class _AdminNewPersonState extends State<AdminNewPerson> {
   TextEditingController ctrlFirstName = TextEditingController();
   TextEditingController ctrlLastName = TextEditingController();
   TextEditingController ctrlBirthdate = TextEditingController();
+  TextEditingController ctrlPosition = TextEditingController();
+
+  void showPositionModal() {
+    showModalBottomSheet<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          color: Colors.amber,
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                const Text('Modal BottomSheet'),
+                ElevatedButton(
+                  child: const Text('Close BottomSheet'),
+                  onPressed: () => Navigator.pop(context),
+                )
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -82,6 +107,22 @@ class _AdminNewPersonState extends State<AdminNewPerson> {
                     decoration: InputDecoration(
                       prefixIcon: Icon(Icons.calendar_today),
                       labelText: 'วัน/เดือน/ปี เกิด',
+                      fillColor: Colors.grey[200],
+                      filled: true,
+                      // border: InputBorder.none,
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  TextFormField(
+                    readOnly: true,
+                    controller: ctrlPosition,
+                    decoration: InputDecoration(
+                      suffixIcon: GestureDetector(
+                          child: Icon(Icons.search),
+                          onTap: () {
+                            showPositionModal();
+                          }),
+                      labelText: 'ตำแหน่ง',
                       fillColor: Colors.grey[200],
                       filled: true,
                       // border: InputBorder.none,
