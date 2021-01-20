@@ -16,22 +16,47 @@ class _AdminNewPersonState extends State<AdminNewPerson> {
 
   void showPositionModal() {
     showModalBottomSheet<void>(
+      useRootNavigator: true,
+      isScrollControlled: true,
       context: context,
       builder: (BuildContext context) {
         return Container(
-          color: Colors.amber,
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                const Text('Modal BottomSheet'),
-                ElevatedButton(
-                  child: const Text('Close BottomSheet'),
-                  onPressed: () => Navigator.pop(context),
-                )
-              ],
-            ),
+          color: Colors.white,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text('เลือกตำแหน่ง',
+                    style: TextStyle(fontWeight: FontWeight.bold)),
+              ),
+              Divider(),
+              ListTile(
+                  title: Text('พยาบาลวิชาชีพ'),
+                  onTap: () {
+                    setState(() {
+                      ctrlPosition.text = 'พยาบาลวิชาชีพ';
+                    });
+                    Navigator.of(context).pop();
+                  }),
+              ListTile(
+                  title: Text('นักวิชาการสาธารณสุข'),
+                  onTap: () {
+                    setState(() {
+                      ctrlPosition.text = 'นักวิชาการสาธารณสุข';
+                    });
+                    Navigator.of(context).pop();
+                  }),
+              ListTile(
+                  title: Text('นักวิชาการคอมพิวเตอร์'),
+                  onTap: () {
+                    setState(() {
+                      ctrlPosition.text = 'นักวิชาการคอมพิวเตอร์';
+                    });
+                    Navigator.of(context).pop();
+                  }),
+            ],
           ),
         );
       },
