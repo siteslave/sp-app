@@ -151,23 +151,6 @@ class _AdminNewPersonState extends State<AdminNewPerson> {
                       // border: InputBorder.none,
                     ),
                   ),
-                  SizedBox(height: 10),
-                  TextFormField(
-                    readOnly: true,
-                    controller: ctrlPosition,
-                    decoration: InputDecoration(
-                      suffixIcon: GestureDetector(
-                          child: Icon(Icons.search),
-                          onTap: () {
-                            showPositionModal();
-                          }),
-                      labelText: 'ตำแหน่ง',
-                      fillColor: Colors.grey[200],
-                      filled: true,
-                      // border: InputBorder.none,
-                    ),
-                  ),
-                  Divider(),
                   Row(
                     children: [
                       Expanded(
@@ -198,6 +181,54 @@ class _AdminNewPersonState extends State<AdminNewPerson> {
                       )
                     ],
                   ),
+                  SizedBox(height: 10),
+                  TextFormField(
+                    onTap: () {
+                      showPositionModal();
+                    },
+                    readOnly: true,
+                    controller: ctrlPosition,
+                    decoration: InputDecoration(
+                      suffixIcon: GestureDetector(
+                          child: Icon(Icons.search),
+                          onTap: () {
+                            showPositionModal();
+                          }),
+                      labelText: 'ตำแหน่ง',
+                      fillColor: Colors.grey[200],
+                      filled: true,
+                      // border: InputBorder.none,
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  TextFormField(
+                    onTap: () {
+                      showPositionModal();
+                    },
+                    readOnly: true,
+                    controller: ctrlPosition,
+                    decoration: InputDecoration(
+                      suffixIcon: GestureDetector(
+                          child: Icon(Icons.search),
+                          onTap: () {
+                            showPositionModal();
+                          }),
+                      labelText: 'หน่วยงานต้นสังกัด',
+                      fillColor: Colors.grey[200],
+                      filled: true,
+                      // border: InputBorder.none,
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  RaisedButton.icon(
+                    padding: EdgeInsets.only(top: 10, bottom: 10, left : 20, right: 20),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
+                    color: Color(0xFFF9AA33),
+                      icon: Icon(Icons.save),
+                      label: Text('บันทึกข้อมูล'),
+                      onPressed: () {
+
+                      })
                 ],
               )),
             )
