@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sps_app/helper.dart';
 
 class AdminNewPerson extends StatefulWidget {
   @override
@@ -6,6 +7,12 @@ class AdminNewPerson extends StatefulWidget {
 }
 
 class _AdminNewPersonState extends State<AdminNewPerson> {
+  Helper helper = Helper();
+
+  TextEditingController ctrlFirstName = TextEditingController();
+  TextEditingController ctrlLastName = TextEditingController();
+  TextEditingController ctrlBirthdate = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,6 +30,7 @@ class _AdminNewPersonState extends State<AdminNewPerson> {
                   child: Column(
                 children: [
                   TextFormField(
+                    controller: ctrlFirstName,
                     decoration: InputDecoration(
                       prefixIcon: Icon(Icons.credit_card),
                       labelText: 'ชื่อ',
@@ -33,6 +41,7 @@ class _AdminNewPersonState extends State<AdminNewPerson> {
                   ),
                   SizedBox(height: 10),
                   TextFormField(
+                    controller: ctrlLastName,
                     decoration: InputDecoration(
                       prefixIcon: Icon(Icons.credit_card),
                       labelText: 'นามสกุล',
@@ -43,6 +52,7 @@ class _AdminNewPersonState extends State<AdminNewPerson> {
                   ),
                   SizedBox(height: 10),
                   TextFormField(
+                    controller: ctrlBirthdate,
                     readOnly: true,
                     onTap: () async {
                       final DateTime picked = await showDatePicker(
@@ -53,16 +63,21 @@ class _AdminNewPersonState extends State<AdminNewPerson> {
                           builder: (context, child) {
                             return Theme(
                               data: ThemeData.light().copyWith(
-                                colorScheme: ColorScheme.light().copyWith(
-                                  primary: Color(0xFF344955)
-                                )
-                              ),
+                                  colorScheme: ColorScheme.light()
+                                      .copyWith(primary: Color(0xFF344955))),
                               child: child,
                             );
                           },
+                          initialDatePickerMode: DatePickerMode.year,
                           firstDate: DateTime(1900, 1, 1),
                           initialDate: DateTime.now(),
                           lastDate: DateTime.now());
+
+                      print(picked);
+                      print(helper.toThaiDate(picked));
+                      setState(() {
+                        ctrlBirthdate.text = helper.toThaiDate(picked);
+                      });
                     },
                     decoration: InputDecoration(
                       prefixIcon: Icon(Icons.calendar_today),
