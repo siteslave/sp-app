@@ -6,8 +6,12 @@ class AdminNewPerson extends StatefulWidget {
   _AdminNewPersonState createState() => _AdminNewPersonState();
 }
 
+enum Sex { male, female }
+
 class _AdminNewPersonState extends State<AdminNewPerson> {
   Helper helper = Helper();
+
+  Sex sex = Sex.male;
 
   TextEditingController ctrlFirstName = TextEditingController();
   TextEditingController ctrlLastName = TextEditingController();
@@ -33,9 +37,11 @@ class _AdminNewPersonState extends State<AdminNewPerson> {
                   children: [
                     Text('เลือกตำแหน่ง',
                         style: TextStyle(fontWeight: FontWeight.bold)),
-                    IconButton(icon: Icon(Icons.close), onPressed: () {
-                      Navigator.of(context).pop();
-                    })
+                    IconButton(
+                        icon: Icon(Icons.close),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        })
                   ],
                 ),
               ),
@@ -160,6 +166,37 @@ class _AdminNewPersonState extends State<AdminNewPerson> {
                       filled: true,
                       // border: InputBorder.none,
                     ),
+                  ),
+                  Divider(),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: ListTile(
+                            leading: Radio(
+                              groupValue: sex,
+                              onChanged: (Sex value) {
+                                setState(() {
+                                  sex = value;
+                                });
+                              },
+                              value: Sex.male,
+                            ),
+                            title: Text('ชาย')),
+                      ),
+                      Expanded(
+                        child: ListTile(
+                            leading: Radio(
+                              groupValue: sex,
+                              onChanged: (Sex value) {
+                                setState(() {
+                                  sex = value;
+                                });
+                              },
+                              value: Sex.female,
+                            ),
+                            title: Text('หญิง')),
+                      )
+                    ],
                   ),
                 ],
               )),
