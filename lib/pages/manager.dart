@@ -2,6 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import "package:collection/collection.dart";
+
 import 'package:sps_app/api.dart';
 import 'package:sps_app/pages/admin/admin_new_person.dart';
 
@@ -13,6 +15,7 @@ class Manager extends StatefulWidget {
 class _ManagerState extends State<Manager> {
   final storage = new FlutterSecureStorage();
   Api api = Api();
+  List employees = [];
 
   Future getEmployees() async {
     String token = await storage.read(key: "token");
@@ -21,7 +24,29 @@ class _ManagerState extends State<Manager> {
       EasyLoading.show(status: 'กรุณารอซักครู่');
       Response res = await api.getEmployees(token);
       EasyLoading.dismiss();
-      print(res.data);
+      // print(res.data);
+
+      if (res.data != null) {
+        var _items = groupBy(res.data, (obj) => obj['department_name']);
+        print(_items);
+
+        var items = [];
+        _items.forEach((key, value) {
+          print(key);
+          List employee = [];
+          value.forEach((emp) {
+            employee.add(emp);
+          });
+
+          items.add({"department": key, "employees": employee});
+        });
+
+        print(items);
+
+        setState(() {
+          employees = items;
+        });
+      }
     } catch (error) {
       EasyLoading.dismiss();
       EasyLoading.showError('ไม่สามารถดึงข้อมูลได้');
@@ -72,52 +97,24 @@ class _ManagerState extends State<Manager> {
               margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
               decoration: BoxDecoration(
                   color: Colors.white, borderRadius: BorderRadius.circular(10)),
-              child: ExpansionTile(
-                title: Text('กลุ่มงานประกันสุขภาพ'),
-                children: [
-                  ListTile(
-                      leading: CircleAvatar(
-                        backgroundColor: Colors.grey[100],
-                        child: Image.network(
-                            'https://randomuser.me/api/portraits/men/32.jpg'),
-                      ),
-                      title: Text('นายสถิตย์ เรียนพิศ'),
-                      subtitle: Text('นักวิชาการคอมพิวเตอร์')),
-                  ListTile(
-                      leading: CircleAvatar(
-                        backgroundColor: Colors.grey[100],
-                        child: Image.network(
-                            'https://randomuser.me/api/portraits/men/33.jpg'),
-                      ),
-                      title: Text('นายทดสอบ ไม่เอาจริง'),
-                      subtitle: Text('นักวิชาการสาธารณสุข')),
-                ],
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-              decoration: BoxDecoration(
-                  color: Colors.white, borderRadius: BorderRadius.circular(10)),
-              child: ExpansionTile(
-                title: Text('กลุ่มงานส่งเสริมสุขภาพ'),
-                children: [
-                  ListTile(
-                      leading: CircleAvatar(
-                        backgroundColor: Colors.grey[100],
-                        child: Image.network(
-                            'https://randomuser.me/api/portraits/men/34.jpg'),
-                      ),
-                      title: Text('นายสถิตย์ เรียนพิศ'),
-                      subtitle: Text('นักวิชาการคอมพิวเตอร์')),
-                  ListTile(
-                      leading: CircleAvatar(
-                        backgroundColor: Colors.grey[100],
-                        child: Image.network(
-                            'https://randomuser.me/api/portraits/men/35.jpg'),
-                      ),
-                      title: Text('นายทดสอบ ไม่เอาจริง'),
-                      subtitle: Text('นักวิชาการสาธารณสุข')),
-                ],
+              child: Column(
+                children: employees.map((e) {
+                  List _employees = e['employees'];
+
+                  return ExpansionTile(
+                    title: Text('${e['department']}'),
+                    children: _employees.map((emp) {
+                      return ListTile(
+                          leading: CircleAvatar(
+                            backgroundColor: Colors.grey[100],
+                            child: Image.network(
+                                'https://11faa5aded5b.ngrok.io/libs/image/profile/${emp['employee_id']}'),
+                          ),
+                          title: Text('${emp['first_name']} ${emp['last_name']}'),
+                          subtitle: Text('${emp['position_name']}'));
+                    }).toList(),
+                  );
+                }).toList(),
               ),
             ),
           ],
