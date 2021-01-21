@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 
 Dio dio = new Dio(new BaseOptions(
@@ -15,5 +17,10 @@ class Api {
       "username": username,
       "password": password,
     });
+  }
+
+  Future<Response> getEmployees(String token) async {
+    String path = '/employees';
+    return await dio.get(path, options: Options(headers: {HttpHeaders.authorizationHeader: 'Bearer $token'}));
   }
 }
