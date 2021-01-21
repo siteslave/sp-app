@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:sps_app/api.dart';
 import 'package:wc_form_validators/wc_form_validators.dart';
 
@@ -16,23 +17,34 @@ class _LoginState extends State<Login> {
   final _formKey = GlobalKey<FormState>();
 
   Api api = Api();
+  final storage = new FlutterSecureStorage();
 
   Future doLogin() async {
     try {
       String username = ctrlUsername.text;
       String password = ctrlPassword.text;
 
+      EasyLoading.show(status: 'กรุณารอซักครู่...');
+
       Response res = await api.login(username, password);
+
+      EasyLoading.dismiss();
+
       if (res.statusCode == 200) {
         print(res.data);
+        String token = res.data['access_token'];
+        await storage.write(key: "token", value: token);
         EasyLoading.showSuccess('เข้าสู่ระบบสำเร็จ');
+
+        Navigator.of(context).pop();
       } else {
         print('เกิดข้อผิดพลาด');
         EasyLoading.showError('ไม่สามารถเข้าสู่ระบบได้');
       }
     } on DioError catch (error) {
+      EasyLoading.dismiss();
       print(error);
-      EasyLoading.showError('ไม่สามารถเข้าสู่ระบบได้');
+      EasyLoading.showError('ชื่อผู้ใช้งานหรือรหัสผ่าน ไม่ถูกต้อง');
     }
   }
 
