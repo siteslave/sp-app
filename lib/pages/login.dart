@@ -1,4 +1,6 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:sps_app/api.dart';
 import 'package:wc_form_validators/wc_form_validators.dart';
 
 class Login extends StatefulWidget {
@@ -11,6 +13,24 @@ class _LoginState extends State<Login> {
   TextEditingController ctrlPassword = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
+
+  Api api = Api();
+
+  Future doLogin() async {
+    try {
+      String username = ctrlUsername.text;
+      String password = ctrlPassword.text;
+
+      Response res = await api.login(username, password);
+      if (res.statusCode == 200) {
+        print(res.data);
+      } else {
+        print('เกิดข้อผิดพลาด');
+      }
+    } catch (error) {
+      print(error);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +66,7 @@ class _LoginState extends State<Login> {
                   TextFormField(
                     validator: Validators.compose([
                       Validators.required('ระบุชื่อผู้ใช้งาน'),
-                      Validators.email('รูปแบบอีเมล์ไม่ถูกต้อง')
+                      // Validators.email('รูปแบบอีเมล์ไม่ถูกต้อง')
                     ]),
                     controller: ctrlUsername,
                     decoration: InputDecoration(
@@ -80,15 +100,16 @@ class _LoginState extends State<Login> {
                         borderRadius: BorderRadius.circular(40)),
                     color: Color(0xFFF9AA33),
                     onPressed: () {
-                    if(_formKey.currentState.validate()) {
-                      // valid
-                      String username = ctrlUsername.text;
-                      String password = ctrlPassword.text;
+                      if (_formKey.currentState.validate()) {
+                        // valid
+                        String username = ctrlUsername.text;
+                        String password = ctrlPassword.text;
 
-                      print(username);
-                      print(password);
-                    }
-                      
+                        print(username);
+                        print(password);
+
+                        doLogin();
+                      }
                     },
                     icon: Icon(Icons.arrow_forward_rounded),
                     label: Text('เข้าสู่ระบบ',
