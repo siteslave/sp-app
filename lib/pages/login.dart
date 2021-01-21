@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:sps_app/api.dart';
 import 'package:wc_form_validators/wc_form_validators.dart';
 
@@ -24,11 +25,14 @@ class _LoginState extends State<Login> {
       Response res = await api.login(username, password);
       if (res.statusCode == 200) {
         print(res.data);
+        EasyLoading.showSuccess('เข้าสู่ระบบสำเร็จ');
       } else {
         print('เกิดข้อผิดพลาด');
+        EasyLoading.showError('ไม่สามารถเข้าสู่ระบบได้');
       }
-    } catch (error) {
+    } on DioError catch (error) {
       print(error);
+      EasyLoading.showError('ไม่สามารถเข้าสู่ระบบได้');
     }
   }
 
