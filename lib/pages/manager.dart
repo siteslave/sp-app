@@ -24,6 +24,7 @@ class _ManagerState extends State<Manager> {
       print(res.data);
     } catch (error) {
       EasyLoading.dismiss();
+      EasyLoading.showError('ไม่สามารถดึงข้อมูลได้');
       print(error);
     }
   }
