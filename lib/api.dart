@@ -56,6 +56,13 @@ class Api {
             headers: {HttpHeaders.authorizationHeader: 'Bearer $token'}));
   }
 
+  Future<Response> getCheckInPlace(double lat, double lng) async {
+    String path =
+        'https://nominatim.openstreetmap.org/reverse?format=json&lat=$lat&lon=$lng&zoom=18&addressdetails=1';
+
+    return await dio.get(path);
+  }
+
   Future<Response> saveEmployee(
       String firstName,
       String lastName,

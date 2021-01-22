@@ -44,6 +44,20 @@ class _AdminNewPersonState extends State<AdminNewPerson> {
   TextEditingController ctrlPosition = TextEditingController();
   TextEditingController ctrlDepartment = TextEditingController();
 
+  String placeName = 'ไม่รู้จัก';
+
+  Future getLocationName() async {
+    try {
+      Response res = await api.getCheckInPlace(lat, lng);
+      print(res);
+      setState(() {
+        placeName = res.data['display_name'];
+      });
+    } catch (error) {
+      print(error);
+    }
+  }
+
   Future getCurrentLocation() async {
     Position position = await _determinePosition();
     print(position);
@@ -52,6 +66,8 @@ class _AdminNewPersonState extends State<AdminNewPerson> {
         lat = position.latitude;
         lng = position.longitude;
       });
+
+      getLocationName();
     }
   }
 
@@ -87,22 +103,21 @@ class _AdminNewPersonState extends State<AdminNewPerson> {
       String sex, int departmentId, int positionId) async {
     String token = await storage.read(key: "token");
     if (lat != null && lng != null) {
-    try {
-      EasyLoading.show(status: "กำลังบันทึก...");
-      await api.saveEmployee(
-          firstName, lastName, birthdate, sex, departmentId, positionId, lat, lng, token);
-      EasyLoading.dismiss();
-      EasyLoading.showSuccess("บันทึกสำเร็จ");
-      Navigator.of(context).pop(true);
-    } catch (error) {
-      EasyLoading.dismiss();
-      print(error);
-      EasyLoading.showError('เกิดข้อผิดพลาด');
-    }
+      try {
+        EasyLoading.show(status: "กำลังบันทึก...");
+        await api.saveEmployee(firstName, lastName, birthdate, sex,
+            departmentId, positionId, lat, lng, token);
+        EasyLoading.dismiss();
+        EasyLoading.showSuccess("บันทึกสำเร็จ");
+        Navigator.of(context).pop(true);
+      } catch (error) {
+        EasyLoading.dismiss();
+        print(error);
+        EasyLoading.showError('เกิดข้อผิดพลาด');
+      }
     } else {
       EasyLoading.showError('กรุณาระบุพิกัด');
     }
-
   }
 
   Future getPositions() async {
@@ -397,6 +412,8 @@ class _AdminNewPersonState extends State<AdminNewPerson> {
                               })
                         ],
                       ),
+                      Text(placeName, style: TextStyle(fontStyle: FontStyle.italic, color: Colors.grey)),
+                      SizedBox(height: 10),
                       RaisedButton.icon(
                           padding: EdgeInsets.only(
                               top: 10, bottom: 10, left: 20, right: 20),

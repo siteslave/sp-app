@@ -29,6 +29,7 @@ class _ManagerState extends State<Manager> {
   File _image;
   final picker = ImagePicker();
 
+
   Future<void> _showConfirmRemove(int employeeId) async {
     return showDialog<void>(
       context: context,
