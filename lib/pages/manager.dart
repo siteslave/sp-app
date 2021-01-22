@@ -11,6 +11,7 @@ import 'package:image_picker/image_picker.dart';
 
 import 'package:sps_app/api.dart';
 import 'package:sps_app/pages/admin/admin_new_person.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Manager extends StatefulWidget {
   @override
@@ -51,7 +52,10 @@ class _ManagerState extends State<Manager> {
               },
             ),
             TextButton(
-              child: Text('ยกเลิก', style: TextStyle(color: Colors.grey,)),
+              child: Text('ยกเลิก',
+                  style: TextStyle(
+                    color: Colors.grey,
+                  )),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -191,6 +195,19 @@ class _ManagerState extends State<Manager> {
                             onTap: () {},
                           ),
                           IconSlideAction(
+                            caption: 'แผนที่',
+                            color: Colors.deepOrange,
+                            icon: Icons.map,
+                            onTap: emp['lat'] != null ? () async {
+                              String url = 'https://www.google.com/maps/search/?api=1&query=${emp['lat']},${emp['lng']}';
+                              if (await canLaunch(url)) {
+                                await launch(url);
+                              } else {
+                                EasyLoading.showError('ไม่สามารถเปิดแผนที่ได้');
+                              }
+                            } : null,
+                          ),
+                          IconSlideAction(
                             caption: 'อัปโหลด',
                             color: Colors.teal,
                             icon: Icons.camera,
@@ -226,7 +243,7 @@ class _ManagerState extends State<Manager> {
                             leading: CircleAvatar(
                               backgroundColor: Colors.grey[100],
                               child: Image.network(
-                                'https://b054a57b0de5.ngrok.io/libs/image/profile/${emp['employee_id']}?$rnd',
+                                'https://5b32a5b16b98.ngrok.io/libs/image/profile/${emp['employee_id']}?$rnd',
                                 headers: {"Authorization": "Bearer $_token"},
                               ),
                             ),

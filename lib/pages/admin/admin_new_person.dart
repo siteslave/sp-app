@@ -2,12 +2,17 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:sps_app/helper.dart';
 import 'package:wc_form_validators/wc_form_validators.dart';
 
 import '../../api.dart';
 
 class AdminNewPerson extends StatefulWidget {
+  final int employeeId;
+
+  AdminNewPerson({this.employeeId});
+
   @override
   _AdminNewPersonState createState() => _AdminNewPersonState();
 }
@@ -30,19 +35,62 @@ class _AdminNewPersonState extends State<AdminNewPerson> {
   int departmentId;
   DateTime birthdate;
 
+  double lat;
+  double lng;
+
   TextEditingController ctrlFirstName = TextEditingController();
   TextEditingController ctrlLastName = TextEditingController();
   TextEditingController ctrlBirthdate = TextEditingController();
   TextEditingController ctrlPosition = TextEditingController();
   TextEditingController ctrlDepartment = TextEditingController();
 
+  Future getCurrentLocation() async {
+    Position position = await _determinePosition();
+    print(position);
+    if (position.latitude != null && position.longitude != null) {
+      setState(() {
+        lat = position.latitude;
+        lng = position.longitude;
+      });
+    }
+  }
+
+  Future<Position> _determinePosition() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      EasyLoading.showError('กรุณาเปิด GPS');
+      return Future.error('Location services are disabled.');
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.deniedForever) {
+      return Future.error(
+          'Location permissions are permantly denied, we cannot request permissions.');
+    }
+
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission != LocationPermission.whileInUse &&
+          permission != LocationPermission.always) {
+        return Future.error(
+            'Location permissions are denied (actual value: $permission).');
+      }
+    }
+
+    return await Geolocator.getCurrentPosition();
+  }
+
   Future saveEmployee(String firstName, String lastName, String birthdate,
       String sex, int departmentId, int positionId) async {
     String token = await storage.read(key: "token");
+    if (lat != null && lng != null) {
     try {
       EasyLoading.show(status: "กำลังบันทึก...");
       await api.saveEmployee(
-          firstName, lastName, birthdate, sex, departmentId, positionId, token);
+          firstName, lastName, birthdate, sex, departmentId, positionId, lat, lng, token);
       EasyLoading.dismiss();
       EasyLoading.showSuccess("บันทึกสำเร็จ");
       Navigator.of(context).pop(true);
@@ -51,6 +99,10 @@ class _AdminNewPersonState extends State<AdminNewPerson> {
       print(error);
       EasyLoading.showError('เกิดข้อผิดพลาด');
     }
+    } else {
+      EasyLoading.showError('กรุณาระบุพิกัด');
+    }
+
   }
 
   Future getPositions() async {
@@ -177,6 +229,12 @@ class _AdminNewPersonState extends State<AdminNewPerson> {
         );
       },
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getCurrentLocation();
   }
 
   @override
@@ -327,6 +385,18 @@ class _AdminNewPersonState extends State<AdminNewPerson> {
                         ),
                       ),
                       SizedBox(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text('พิกัด: $lat, $lng'),
+                          IconButton(
+                              icon:
+                                  Icon(Icons.location_pin, color: Colors.green),
+                              onPressed: () {
+                                getCurrentLocation();
+                              })
+                        ],
+                      ),
                       RaisedButton.icon(
                           padding: EdgeInsets.only(
                               top: 10, bottom: 10, left: 20, right: 20),

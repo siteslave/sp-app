@@ -5,7 +5,7 @@ import 'package:dio/dio.dart';
 
 
 Dio dio = new Dio(new BaseOptions(
-    baseUrl: 'https://b054a57b0de5.ngrok.io',
+    baseUrl: 'https://5b32a5b16b98.ngrok.io',
     receiveDataWhenStatusError: false,
     connectTimeout: 60 * 1000,
     receiveTimeout: 60 * 1000));
@@ -49,6 +49,13 @@ class Api {
             headers: {HttpHeaders.authorizationHeader: 'Bearer $token'}));
   }
 
+  Future<Response> getInfo(int employeeId, String token) async {
+    String path = '/employees/$employeeId';
+    return await dio.get(path,
+        options: Options(
+            headers: {HttpHeaders.authorizationHeader: 'Bearer $token'}));
+  }
+
   Future<Response> saveEmployee(
       String firstName,
       String lastName,
@@ -56,6 +63,8 @@ class Api {
       String sex,
       int departmentId,
       int positionId,
+      double lat,
+      double lng,
       String token) async {
     String path = '/employees';
     return await dio.post(path,
@@ -65,7 +74,9 @@ class Api {
           "birthdate": birthdate,
           "sex": sex,
           "departmentId": departmentId.toString(),
-          "positionId": positionId.toString()
+          "positionId": positionId.toString(),
+          "lat": lat.toString(),
+          "lng": lng.toString(),
         },
         options: Options(
             headers: {HttpHeaders.authorizationHeader: 'Bearer $token'}));
