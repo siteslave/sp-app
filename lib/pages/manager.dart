@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import "package:collection/collection.dart";
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 import 'package:sps_app/api.dart';
 import 'package:sps_app/pages/admin/admin_new_person.dart';
@@ -107,17 +108,41 @@ class _ManagerState extends State<Manager> {
                   return ExpansionTile(
                     title: Text('${e['department']}'),
                     children: _employees.map((emp) {
-                      return ListTile(
-                          leading: CircleAvatar(
-                            backgroundColor: Colors.grey[100],
-                            child: Image.network(
-                              'https://cdec1ffd0e01.ngrok.io/libs/image/profile/${emp['employee_id']}',
-                              headers: {"Authorization": "Bearer $_token"},
-                            ),
+                      return Slidable(
+                        actionPane: SlidableDrawerActionPane(),
+                        actionExtentRatio: 0.25,
+                        secondaryActions: <Widget>[
+                          IconSlideAction(
+                            caption: 'แก้ไข',
+                            color: Colors.black45,
+                            icon: Icons.edit,
+                            onTap: () {},
                           ),
-                          title:
-                              Text('${emp['first_name']} ${emp['last_name']}'),
-                          subtitle: Text('${emp['position_name']}'));
+                          IconSlideAction(
+                            caption: 'อัปโหลด',
+                            color: Colors.teal,
+                            icon: Icons.camera,
+                            onTap: () {},
+                          ),
+                          IconSlideAction(
+                            caption: 'ลบ',
+                            color: Colors.red,
+                            icon: Icons.delete,
+                            onTap: () {},
+                          ),
+                        ],
+                        child: ListTile(
+                            leading: CircleAvatar(
+                              backgroundColor: Colors.grey[100],
+                              child: Image.network(
+                                'https://cdec1ffd0e01.ngrok.io/libs/image/profile/${emp['employee_id']}',
+                                headers: {"Authorization": "Bearer $_token"},
+                              ),
+                            ),
+                            title: Text(
+                                '${emp['first_name']} ${emp['last_name']}'),
+                            subtitle: Text('${emp['position_name']}')),
+                      );
                     }).toList(),
                   );
                 }).toList(),
