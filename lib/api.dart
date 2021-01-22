@@ -1,9 +1,11 @@
 import 'dart:io';
+import 'package:path/path.dart';
 
 import 'package:dio/dio.dart';
 
+
 Dio dio = new Dio(new BaseOptions(
-    baseUrl: 'https://cdec1ffd0e01.ngrok.io',
+    baseUrl: 'https://b054a57b0de5.ngrok.io',
     receiveDataWhenStatusError: false,
     connectTimeout: 60 * 1000,
     receiveTimeout: 60 * 1000));
@@ -58,6 +60,20 @@ class Api {
           "departmentId": departmentId.toString(),
           "positionId": positionId.toString()
         },
+        options: Options(
+            headers: {HttpHeaders.authorizationHeader: 'Bearer $token'}));
+  }
+
+  Future<Response> uploadImage(
+      int employeeId, File imageFile, String token) async {
+    String path = '/employees/$employeeId/upload';
+
+    FormData formData = FormData.fromMap({
+      "file": await MultipartFile.fromFile(imageFile.path, filename: basename(imageFile.path))
+    });
+
+    return await dio.post(path,
+    data: formData,
         options: Options(
             headers: {HttpHeaders.authorizationHeader: 'Bearer $token'}));
   }

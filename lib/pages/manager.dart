@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import "package:collection/collection.dart";
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:image_picker/image_picker.dart';
 
 import 'package:sps_app/api.dart';
 import 'package:sps_app/pages/admin/admin_new_person.dart';
@@ -19,6 +22,21 @@ class _ManagerState extends State<Manager> {
   List employees = [];
 
   String _token;
+
+  File _image;
+  final picker = ImagePicker();
+
+  Future uploadFile(File imageFile, int employeeId) async {
+    try {
+      EasyLoading.show(status: 'อัปโหลดไฟล์...');
+      String token = await storage.read(key: "token");
+      await api.uploadImage(employeeId, imageFile, token);
+      EasyLoading.showSuccess('อัปโหลดสำเร็จ');
+    } catch (error) {
+      EasyLoading.showError('เกิดข้อผิดพลาด');
+      print(error);
+    }
+  }
 
   Future getEmployees() async {
     String token = await storage.read(key: "token");
@@ -122,7 +140,21 @@ class _ManagerState extends State<Manager> {
                             caption: 'อัปโหลด',
                             color: Colors.teal,
                             icon: Icons.camera,
-                            onTap: () {},
+                            onTap: () async {
+                              final pickedFile = await picker.getImage(
+                                  source: ImageSource.camera,
+                                  imageQuality: 50,
+                                  maxHeight: 680,
+                                  maxWidth: 680);
+
+                              if (pickedFile != null) {
+                                File imageFile = File(pickedFile.path);
+
+                                int employeeId =
+                                    int.parse(emp['employee_id'].toString());
+                                uploadFile(imageFile, employeeId);
+                              }
+                            },
                           ),
                           IconSlideAction(
                             caption: 'ลบ',
@@ -135,7 +167,7 @@ class _ManagerState extends State<Manager> {
                             leading: CircleAvatar(
                               backgroundColor: Colors.grey[100],
                               child: Image.network(
-                                'https://cdec1ffd0e01.ngrok.io/libs/image/profile/${emp['employee_id']}',
+                                'https://b054a57b0de5.ngrok.io/libs/image/profile/${emp['employee_id']}',
                                 headers: {"Authorization": "Bearer $_token"},
                               ),
                             ),
