@@ -23,4 +23,14 @@ class Api {
     String path = '/employees';
     return await dio.get(path, options: Options(headers: {HttpHeaders.authorizationHeader: 'Bearer $token'}));
   }
+
+  Future<Response> getDepartments(String token) async {
+    String path = '/libs/departments';
+    return await dio.get(path, options: Options(headers: {HttpHeaders.authorizationHeader: 'Bearer $token'}));
+  }
+
+  Future<Response> getPositions(String token) async {
+    String path = '/libs/positions';
+    return await dio.get(path, options: Options(headers: {HttpHeaders.authorizationHeader: 'Bearer $token'}));
+  }
 }

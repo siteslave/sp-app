@@ -1,5 +1,10 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:sps_app/helper.dart';
+
+import '../../api.dart';
 
 class AdminNewPerson extends StatefulWidget {
   @override
@@ -9,14 +14,52 @@ class AdminNewPerson extends StatefulWidget {
 enum Sex { male, female }
 
 class _AdminNewPersonState extends State<AdminNewPerson> {
+  final storage = new FlutterSecureStorage();
+
   Helper helper = Helper();
+  Api api = Api();
 
   Sex sex = Sex.male;
+
+  List positions = [];
+  List departments = [];
 
   TextEditingController ctrlFirstName = TextEditingController();
   TextEditingController ctrlLastName = TextEditingController();
   TextEditingController ctrlBirthdate = TextEditingController();
   TextEditingController ctrlPosition = TextEditingController();
+
+  Future getPositions() async {
+    String token = await storage.read(key: "token");
+    try {
+      EasyLoading.show(status: "กรุณารอซักครู่...");
+      Response res = await api.getPositions(token);
+      EasyLoading.dismiss();
+      setState(() {
+        positions = res.data;
+      });
+    } catch (error) {
+      EasyLoading.dismiss();
+      print(error);
+      EasyLoading.showError('เกิดข้อผิดพลาด');
+    }
+  }
+
+  Future getDepartments() async {
+    String token = await storage.read(key: "token");
+    try {
+      EasyLoading.show(status: "กรุณารอซักครู่...");
+      Response res = await api.getDepartments(token);
+      EasyLoading.dismiss();
+      setState(() {
+        departments = res.data;
+      });
+    } catch (error) {
+      EasyLoading.dismiss();
+      print(error);
+      EasyLoading.showError('เกิดข้อผิดพลาด');
+    }
+  }
 
   void showPositionModal() {
     showModalBottomSheet<void>(
@@ -45,31 +88,18 @@ class _AdminNewPersonState extends State<AdminNewPerson> {
                   ],
                 ),
               ),
-              Divider(),
-              ListTile(
-                  title: Text('พยาบาลวิชาชีพ'),
-                  onTap: () {
-                    setState(() {
-                      ctrlPosition.text = 'พยาบาลวิชาชีพ';
-                    });
-                    Navigator.of(context).pop();
-                  }),
-              ListTile(
-                  title: Text('นักวิชาการสาธารณสุข'),
-                  onTap: () {
-                    setState(() {
-                      ctrlPosition.text = 'นักวิชาการสาธารณสุข';
-                    });
-                    Navigator.of(context).pop();
-                  }),
-              ListTile(
-                  title: Text('นักวิชาการคอมพิวเตอร์'),
-                  onTap: () {
-                    setState(() {
-                      ctrlPosition.text = 'นักวิชาการคอมพิวเตอร์';
-                    });
-                    Navigator.of(context).pop();
-                  }),
+              Column(
+                children: positions.map((position) {
+                  return ListTile(
+                      title: Text('${position['position_name']}'),
+                      onTap: () {
+                        setState(() {
+                          ctrlPosition.text = position['position_name'];
+                        });
+                        Navigator.of(context).pop();
+                      });
+                }).toList(),
+              )
             ],
           ),
         );
@@ -183,17 +213,14 @@ class _AdminNewPersonState extends State<AdminNewPerson> {
                   ),
                   SizedBox(height: 10),
                   TextFormField(
-                    onTap: () {
+                    onTap: () async {
+                      await getPositions();
                       showPositionModal();
                     },
                     readOnly: true,
                     controller: ctrlPosition,
                     decoration: InputDecoration(
-                      suffixIcon: GestureDetector(
-                          child: Icon(Icons.search),
-                          onTap: () {
-                            showPositionModal();
-                          }),
+                      suffixIcon: Icon(Icons.search),
                       labelText: 'ตำแหน่ง',
                       fillColor: Colors.grey[200],
                       filled: true,
@@ -208,11 +235,7 @@ class _AdminNewPersonState extends State<AdminNewPerson> {
                     readOnly: true,
                     controller: ctrlPosition,
                     decoration: InputDecoration(
-                      suffixIcon: GestureDetector(
-                          child: Icon(Icons.search),
-                          onTap: () {
-                            showPositionModal();
-                          }),
+                      suffixIcon: Icon(Icons.search),
                       labelText: 'หน่วยงานต้นสังกัด',
                       fillColor: Colors.grey[200],
                       filled: true,
@@ -221,14 +244,14 @@ class _AdminNewPersonState extends State<AdminNewPerson> {
                   ),
                   SizedBox(height: 10),
                   RaisedButton.icon(
-                    padding: EdgeInsets.only(top: 10, bottom: 10, left : 20, right: 20),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
-                    color: Color(0xFFF9AA33),
+                      padding: EdgeInsets.only(
+                          top: 10, bottom: 10, left: 20, right: 20),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(40)),
+                      color: Color(0xFFF9AA33),
                       icon: Icon(Icons.save),
                       label: Text('บันทึกข้อมูล'),
-                      onPressed: () {
-
-                      })
+                      onPressed: () {})
                 ],
               )),
             )
