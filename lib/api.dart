@@ -42,6 +42,13 @@ class Api {
             headers: {HttpHeaders.authorizationHeader: 'Bearer $token'}));
   }
 
+  Future<Response> removeEmployee(int employeeId, String token) async {
+    String path = '/employees/$employeeId';
+    return await dio.delete(path,
+        options: Options(
+            headers: {HttpHeaders.authorizationHeader: 'Bearer $token'}));
+  }
+
   Future<Response> saveEmployee(
       String firstName,
       String lastName,

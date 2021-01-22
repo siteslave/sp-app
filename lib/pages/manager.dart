@@ -28,6 +28,53 @@ class _ManagerState extends State<Manager> {
   File _image;
   final picker = ImagePicker();
 
+  Future<void> _showConfirmRemove(int employeeId) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('ยืนยันการลบ'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('คุณต้อการลบข้อมูล ใช่หรือไม่?'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('ยืนยัน'),
+              onPressed: () {
+                Navigator.of(context).pop();
+                removeEmployee(employeeId);
+              },
+            ),
+            TextButton(
+              child: Text('ยกเลิก', style: TextStyle(color: Colors.grey,)),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future removeEmployee(int employeeId) async {
+    try {
+      EasyLoading.show(status: 'ลบข้อมูล...');
+      String token = await storage.read(key: "token");
+      await api.removeEmployee(employeeId, token);
+      EasyLoading.showSuccess('ลบเสร็จแล้ว');
+      getEmployees();
+    } catch (error) {
+      EasyLoading.showError('เกิดข้อผิดพลาด');
+      print(error);
+    }
+  }
+
   Future uploadFile(File imageFile, int employeeId) async {
     try {
       EasyLoading.show(status: 'อัปโหลดไฟล์...');
@@ -149,7 +196,7 @@ class _ManagerState extends State<Manager> {
                             icon: Icons.camera,
                             onTap: () async {
                               final pickedFile = await picker.getImage(
-                                  source: ImageSource.camera,
+                                  source: ImageSource.gallery,
                                   imageQuality: 50,
                                   maxHeight: 680,
                                   maxWidth: 680);
@@ -167,7 +214,12 @@ class _ManagerState extends State<Manager> {
                             caption: 'ลบ',
                             color: Colors.red,
                             icon: Icons.delete,
-                            onTap: () {},
+                            onTap: () {
+                              int employeeId =
+                                  int.parse(emp['employee_id'].toString());
+                              // removeEmployee(employeeId);
+                              _showConfirmRemove(employeeId);
+                            },
                           ),
                         ],
                         child: ListTile(
