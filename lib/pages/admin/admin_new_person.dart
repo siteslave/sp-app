@@ -24,10 +24,14 @@ class _AdminNewPersonState extends State<AdminNewPerson> {
   List positions = [];
   List departments = [];
 
+  int positionId;
+  int departmentId;
+
   TextEditingController ctrlFirstName = TextEditingController();
   TextEditingController ctrlLastName = TextEditingController();
   TextEditingController ctrlBirthdate = TextEditingController();
   TextEditingController ctrlPosition = TextEditingController();
+  TextEditingController ctrlDepartment = TextEditingController();
 
   Future getPositions() async {
     String token = await storage.read(key: "token");
@@ -91,10 +95,58 @@ class _AdminNewPersonState extends State<AdminNewPerson> {
               Column(
                 children: positions.map((position) {
                   return ListTile(
-                      title: Text('${position['position_name']}'),
+                      title: Text(position['position_name']),
                       onTap: () {
                         setState(() {
                           ctrlPosition.text = position['position_name'];
+                          positionId = int.parse(position['position_id']);
+                        });
+                        Navigator.of(context).pop();
+                      });
+                }).toList(),
+              )
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+   void showDepartmentModal() {
+    showModalBottomSheet<void>(
+      useRootNavigator: true,
+      isScrollControlled: true,
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          color: Colors.white,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('เลือกหน่วยงานต้นสังกัด',
+                        style: TextStyle(fontWeight: FontWeight.bold)),
+                    IconButton(
+                        icon: Icon(Icons.close),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        })
+                  ],
+                ),
+              ),
+              Column(
+                children: departments.map((department) {
+                  return ListTile(
+                      title: Text(department['department_name']),
+                      onTap: () {
+                        setState(() {
+                          ctrlDepartment.text = department['department_name'];
+                          departmentId = int.parse(department['department_id']);
                         });
                         Navigator.of(context).pop();
                       });
