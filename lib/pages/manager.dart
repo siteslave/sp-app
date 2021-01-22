@@ -196,7 +196,7 @@ class _ManagerState extends State<Manager> {
                           ),
                           IconSlideAction(
                             caption: 'แผนที่',
-                            color: Colors.deepOrange,
+                            color: emp['lat'] != null ? Colors.deepOrange : Colors.grey,
                             icon: Icons.map,
                             onTap: emp['lat'] != null ? () async {
                               String url = 'https://www.google.com/maps/search/?api=1&query=${emp['lat']},${emp['lng']}';
