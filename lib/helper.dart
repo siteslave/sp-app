@@ -9,4 +9,10 @@ class Helper {
     String thaiDate = '$date1 $year'; // 20 ม.ค. 2564
     return thaiDate;
   }
+
+  String toMySQLDate(DateTime date) {
+    var format = new DateFormat('yyyy-MM-dd');
+    String mysqlDate = format.format(date);
+    return mysqlDate; // YYYY-MM-DD
+  }
 }
