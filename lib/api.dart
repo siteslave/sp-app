@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 
 Dio dio = new Dio(new BaseOptions(
-    baseUrl: 'https://11faa5aded5b.ngrok.io',
+    baseUrl: 'https://92b1be27fb3b.ngrok.io',
     receiveDataWhenStatusError: false,
     connectTimeout: 60 * 1000,
     receiveTimeout: 60 * 1000));

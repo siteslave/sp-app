@@ -17,9 +17,13 @@ class _ManagerState extends State<Manager> {
   Api api = Api();
   List employees = [];
 
+  String _token;
+
   Future getEmployees() async {
     String token = await storage.read(key: "token");
-
+    setState(() {
+      _token = token;
+    });
     try {
       EasyLoading.show(status: 'กรุณารอซักครู่');
       Response res = await api.getEmployees(token);
@@ -100,7 +104,6 @@ class _ManagerState extends State<Manager> {
               child: Column(
                 children: employees.map((e) {
                   List _employees = e['employees'];
-
                   return ExpansionTile(
                     title: Text('${e['department']}'),
                     children: _employees.map((emp) {
@@ -108,9 +111,12 @@ class _ManagerState extends State<Manager> {
                           leading: CircleAvatar(
                             backgroundColor: Colors.grey[100],
                             child: Image.network(
-                                'https://11faa5aded5b.ngrok.io/libs/image/profile/${emp['employee_id']}'),
+                              'https://92b1be27fb3b.ngrok.io/libs/image/profile/${emp['employee_id']}',
+                              headers: {"Authorization": "Bearer $_token"},
+                            ),
                           ),
-                          title: Text('${emp['first_name']} ${emp['last_name']}'),
+                          title:
+                              Text('${emp['first_name']} ${emp['last_name']}'),
                           subtitle: Text('${emp['position_name']}'));
                     }).toList(),
                   );
