@@ -111,7 +111,7 @@ class _ManagerState extends State<Manager> {
                           leading: CircleAvatar(
                             backgroundColor: Colors.grey[100],
                             child: Image.network(
-                              'https://92b1be27fb3b.ngrok.io/libs/image/profile/${emp['employee_id']}',
+                              'https://cdec1ffd0e01.ngrok.io/libs/image/profile/${emp['employee_id']}',
                               headers: {"Authorization": "Bearer $_token"},
                             ),
                           ),
@@ -127,9 +127,11 @@ class _ManagerState extends State<Manager> {
         ),
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.person_add),
-          onPressed: () {
-            Navigator.of(context).push(
+          onPressed: () async {
+            var res = await Navigator.of(context).push(
                 MaterialPageRoute(builder: (context) => AdminNewPerson()));
+
+            if (res != null) getEmployees();
           },
         ));
   }

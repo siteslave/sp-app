@@ -36,6 +36,23 @@ class _AdminNewPersonState extends State<AdminNewPerson> {
   TextEditingController ctrlPosition = TextEditingController();
   TextEditingController ctrlDepartment = TextEditingController();
 
+  Future saveEmployee(String firstName, String lastName, String birthdate,
+      String sex, int departmentId, int positionId) async {
+    String token = await storage.read(key: "token");
+    try {
+      EasyLoading.show(status: "กำลังบันทึก...");
+      await api.saveEmployee(
+          firstName, lastName, birthdate, sex, departmentId, positionId, token);
+      EasyLoading.dismiss();
+      EasyLoading.showSuccess("บันทึกสำเร็จ");
+      Navigator.of(context).pop(true);
+    } catch (error) {
+      EasyLoading.dismiss();
+      print(error);
+      EasyLoading.showError('เกิดข้อผิดพลาด');
+    }
+  }
+
   Future getPositions() async {
     String token = await storage.read(key: "token");
     try {
@@ -327,12 +344,8 @@ class _AdminNewPersonState extends State<AdminNewPerson> {
                               int _positionId = positionId;
                               int _departmentId = departmentId;
 
-                              print('First name: $_firstName');
-                              print('Last name: $_lastName');
-                              print('Birthdate: $_birthdate');
-                              print('Sex: $_sex');
-                              print('Position ID: $_positionId');
-                              print('Department ID: $_departmentId');
+                              saveEmployee(_firstName, _lastName, _birthdate,
+                                  _sex, _departmentId, _positionId);
                             }
                           })
                     ],
