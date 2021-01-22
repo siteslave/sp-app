@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +23,7 @@ class _ManagerState extends State<Manager> {
   List employees = [];
 
   String _token;
+  var rnd;
 
   File _image;
   final picker = ImagePicker();
@@ -32,6 +34,7 @@ class _ManagerState extends State<Manager> {
       String token = await storage.read(key: "token");
       await api.uploadImage(employeeId, imageFile, token);
       EasyLoading.showSuccess('อัปโหลดสำเร็จ');
+      getEmployees();
     } catch (error) {
       EasyLoading.showError('เกิดข้อผิดพลาด');
       print(error);
@@ -40,7 +43,11 @@ class _ManagerState extends State<Manager> {
 
   Future getEmployees() async {
     String token = await storage.read(key: "token");
+
+    var _rnd = new Random();
+
     setState(() {
+      rnd = _rnd.nextInt(10000);
       _token = token;
     });
     try {
@@ -167,7 +174,7 @@ class _ManagerState extends State<Manager> {
                             leading: CircleAvatar(
                               backgroundColor: Colors.grey[100],
                               child: Image.network(
-                                'https://b054a57b0de5.ngrok.io/libs/image/profile/${emp['employee_id']}',
+                                'https://b054a57b0de5.ngrok.io/libs/image/profile/${emp['employee_id']}?$rnd',
                                 headers: {"Authorization": "Bearer $_token"},
                               ),
                             ),
