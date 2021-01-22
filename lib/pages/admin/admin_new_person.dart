@@ -112,7 +112,7 @@ class _AdminNewPersonState extends State<AdminNewPerson> {
     );
   }
 
-   void showDepartmentModal() {
+  void showDepartmentModal() {
     showModalBottomSheet<void>(
       useRootNavigator: true,
       isScrollControlled: true,
@@ -146,7 +146,7 @@ class _AdminNewPersonState extends State<AdminNewPerson> {
                       onTap: () {
                         setState(() {
                           ctrlDepartment.text = department['department_name'];
-                          departmentId = int.parse(department['department_id']);
+                          departmentId = department['department_id'];
                         });
                         Navigator.of(context).pop();
                       });
@@ -281,11 +281,12 @@ class _AdminNewPersonState extends State<AdminNewPerson> {
                   ),
                   SizedBox(height: 10),
                   TextFormField(
-                    onTap: () {
-                      showPositionModal();
+                    onTap: () async {
+                      await getDepartments();
+                      showDepartmentModal();
                     },
                     readOnly: true,
-                    controller: ctrlPosition,
+                    controller: ctrlDepartment,
                     decoration: InputDecoration(
                       suffixIcon: Icon(Icons.search),
                       labelText: 'หน่วยงานต้นสังกัด',
